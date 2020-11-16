@@ -25,22 +25,22 @@ namespace GraphQL.Tests
             services.AddDbContextPool<ApplicationDbContext>(
                 options => options.UseInMemoryDatabase("Data Source=conferences.db"));
 
-             SchemaBuilder.New()
-                .AddServices(services.BuildServiceProvider())
-                .AddQueryType(d => d.Name("Query"))
-                    .AddType<AttendeeQueries>()
-                .AddMutationType(d => d.Name("Mutation"))
-                    .AddType<AttendeeMutations>()
-                .AddType<AttendeeType>()
-                .AddType<SessionType>()
-                .AddType<SpeakerType>()
-                .AddType<TrackType>()
-                .EnableRelaySupport()
-                .Create()
-                .ToString()
-                .MatchSnapshot();
+            SchemaBuilder.New()
+               .AddServices(services.BuildServiceProvider())
+               .AddQueryType(d => d.Name("Query"))
+                   .AddType<AttendeeQueries>()
+               .AddMutationType(d => d.Name("Mutation"))
+                   .AddType<AttendeeMutations>()
+               .AddType<AttendeeType>()
+               .AddType<SessionType>()
+               .AddType<SpeakerType>()
+               .AddType<TrackType>()
+               .EnableRelaySupport()
+               .Create()
+               .ToString()
+               .MatchSnapshot();
         }
-        
+
         [Fact]
         public async Task RegisterAttendee()
         {
@@ -57,10 +57,10 @@ namespace GraphQL.Tests
                     .AddType<SessionType>()
                     .AddType<SpeakerType>()
                     .AddType<TrackType>()
-                    // .EnableRelaySupport()
+                // .EnableRelaySupport()
                 .Services
                 .BuildServiceProvider();
-            
+
             // act
             IExecutionResult result = await services.ExecuteRequestAsync(
                 QueryRequestBuilder.New()
@@ -72,7 +72,7 @@ namespace GraphQL.Tests
                                         firstName: ""michael""
                                         lastName: ""staib""
                                         userName: ""michael3""
-                                    }) 
+                                    })
                             {
                                 attendee {
                                     id
@@ -80,7 +80,7 @@ namespace GraphQL.Tests
                             }
                         }")
                     .Create());
-            
+
             // assert
             result.MatchSnapshot();
         }
